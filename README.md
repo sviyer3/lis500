@@ -1,2 +1,2 @@
-# Project-2
-For LIS 500 Project 2
+# Projects
+For LIS 500 Projects
