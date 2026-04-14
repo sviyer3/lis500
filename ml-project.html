@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Project | Project 2</title>
+    <link rel="stylesheet" href="stylesheet.css">
+    <style>
+        .ml-section {
+            background: #fff;
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 18px;
+            box-shadow: 0 10px 22px rgba(15, 23, 42, 0.07);
+            border: 1px solid rgba(15, 23, 42, 0.06);
+        }
+ 
+        .ml-section h2 {
+            margin-top: 0;
+            color: #1f3c88;
+        }
+ 
+        .ml-wrap {
+            max-width: 1100px;
+            margin: 0 auto 18px auto;
+            padding: 24px 18px;
+        }
+ 
+        .ml-section-title {
+            margin: 0 0 14px 0;
+            font-size: 1.6rem;
+        }
+ 
+        /* Hero */
+        .ml-hero {
+            position: relative;
+            border-radius: 18px;
+            overflow: hidden;
+            margin: 22px auto;
+            max-width: 1100px;
+            padding: 56px 18px;
+            background:
+                linear-gradient(135deg, rgba(31,60,136,0.90), rgba(245,158,11,0.60)),
+                url("images/hero-tech.jpg");
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+        }
+ 
+        .ml-hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 18% 25%, rgba(255,255,255,0.16), transparent 55%);
+            pointer-events: none;
+        }
+ 
+        .ml-hero-content {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+ 
+        .ml-hero-title {
+            font-family: "Playfair Display", serif;
+            font-size: clamp(2rem, 3.2vw, 3rem);
+            margin: 0 0 10px 0;
+            line-height: 1.08;
+        }
+ 
+        .ml-hero-subtitle {
+            margin: 0;
+            font-size: 1.05rem;
+            color: rgba(255,255,255,0.95);
+            max-width: 70ch;
+        }
+ 
+        /* Video */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #000;
+        }
+ 
+        .video-container video {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border-radius: 12px;
+        }
+ 
+        /* Teachable Machine embed */
+        .tm-embed-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+ 
+        #webcam-container canvas {
+            border-radius: 12px;
+            max-width: 100%;
+        }
+ 
+        #label-container {
+            width: 100%;
+            max-width: 400px;
+        }
+ 
+        .label-bar-wrap {
+            margin-bottom: 8px;
+        }
+ 
+        .label-bar-label {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 4px;
+        }
+ 
+        .label-bar-bg {
+            background: #e5e7eb;
+            border-radius: 8px;
+            height: 22px;
+            overflow: hidden;
+        }
+ 
+        .label-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #1f3c88, #0b5ed7);
+            border-radius: 8px;
+            transition: width 0.2s ease;
+            display: flex;
+            align-items: center;
+            padding-left: 8px;
+        }
+ 
+        .label-bar-pct {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #fff;
+        }
+ 
+        .tm-btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 14px;
+            font-weight: 800;
+            font-size: 1rem;
+            background: #fbbf24;
+            color: #1f3c88;
+            border: none;
+            cursor: pointer;
+            transition: filter 0.15s;
+        }
+ 
+        .tm-btn:hover { filter: brightness(0.95); }
+ 
+        /* Data info cards */
+        .data-cards {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+ 
+        .data-card {
+            background: #f8fafc;
+            border-radius: 14px;
+            padding: 16px;
+            border: 1px solid rgba(15,23,42,0.07);
+            text-align: center;
+        }
+ 
+        .data-card-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #1f3c88;
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+ 
+        .data-card-label {
+            font-size: 0.88rem;
+            color: #6b7280;
+            font-weight: 600;
+        }
+ 
+        /* Project statements */
+        .statement-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+ 
+        .statement-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 22px;
+            box-shadow: 0 10px 22px rgba(15, 23, 42, 0.07);
+            border: 1px solid rgba(15, 23, 42, 0.06);
+            position: relative;
+            overflow: hidden;
+        }
+ 
+        .statement-card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0;
+            height: 6px; width: 100%;
+            background: linear-gradient(90deg, #1f3c88, #0b5ed7, #f59e0b);
+        }
+ 
+        .statement-card h3 {
+            margin: 10px 0 6px 0;
+            color: #1f3c88;
+        }
+ 
+        .statement-card .role-tag {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #f59e0b;
+            margin-bottom: 12px;
+        }
+ 
+        .statement-card p {
+            color: #374151;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+ 
+        /* Links section */
+        .links-row {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+ 
+        .link-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-decoration: none;
+            background: #f0f4ff;
+            color: #1f3c88;
+            border: 1.5px solid #c7d4f5;
+            transition: background 0.15s;
+        }
+ 
+        .link-pill:hover {
+            background: #dde7fb;
+        }
+ 
+        .link-pill.github {
+            background: #f4f4f5;
+            color: #18181b;
+            border-color: #d4d4d8;
+        }
+ 
+        .link-pill.github:hover {
+            background: #e4e4e7;
+        }
+ 
+        @media (max-width: 900px) {
+            .data-cards { grid-template-columns: 1fr 1fr; }
+            .statement-grid { grid-template-columns: 1fr; }
+        }
+ 
+        @media (max-width: 600px) {
+            .data-cards { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+ 
+<body>
+ 
+<a class="skip-link" href="#main">Skip to main content</a>
+ 
+<header>
+    <div class="header-inner">
+        <h1>Project 2: LIS 500</h1>
+        <nav aria-label="Main navigation">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="tech-hero.html">Tech Heroes</a></li>
+                <li><a href="resources.html">Implicit Bias Resource Guide</a></li>
+                <li><a href="ml-project.html" aria-current="page">ML Project</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+ 
+<main id="main">
+ 
+    <!-- Hero Banner -->
+    <section class="ml-hero" aria-label="ML Project intro">
+        <div class="ml-hero-overlay"></div>
+        <div class="ml-hero-content">
+            <p class="eyebrow">Machine Learning • Teachable Machines • Unmasking AI</p>
+            <h2 class="ml-hero-title">Our Machine Learning Classifier</h2>
+            <p class="ml-hero-subtitle">
+                Built with Teachable Machine using 270 original images — and shaped by the lessons of Joy Buolamwini's <em>Unmasking AI</em>.
+            </p>
+        </div>
+    </section>
+ 
+    <div class="ml-wrap">
+ 
+        <!-- Data Stats -->
+        <div class="data-cards">
+            <div class="data-card">
+                <div class="data-card-number">270</div>
+                <div class="data-card-label">Total original images</div>
+            </div>
+            <div class="data-card">
+                <div class="data-card-number">2</div>
+                <div class="data-card-label">Team members</div>
+            </div>
+        </div>
+ 
+	<!-- Live Demo Link -->
+        <div class="ml-section">
+            <h2>Try Our Classifier Live</h2>
+            <p>Click the link below to open our Teachable Machine model and test it yourself in your 			browser.</p>
+            <p><a href="https://teachablemachine.withgoogle.com/models/xjmZhtAR4/" target="_blank" 	rel="noopener">https://teachablemachine.withgoogle.com/models/xjmZhtAR4/</a></p>
+        </div>
+        
+ 
+        <!-- Video Demo -->
+        <div class="ml-section">
+            <h2>Algorithm in Action</h2>
+            <p>Watch a recording of our classifier working with real-world examples.</p>
+            <div class="video-container">
+                <video controls>
+                    <source src="algorithm_video.mp4" type="video/mp4">
+                    
+                </video>
+            </div>
+        </div>
+ 
+        <!-- Project Statement -->
+        <div class="ml-section">
+            <h2>Project Statement</h2>
+            <p style="margin-bottom: 18px;">
+                Reflecting on Joy Buolamwini's <em>Unmasking AI</em> and what this project revealed about bias, data, and responsibility in machine learning.
+            </p>
+ 
+            <article class="statement-card" style="max-width: 860px;">
+                    
+                    <p>
+                        	Image classification is the unique process by which machine learning is used to distinguish between different sets of images. In this project, we look to tackle image classification in the form of identifying the difference between three main categories of images, phones, laptops, and mice. The hope is that by doing this we can look to achieve the possibilities of distinguishing between different technological applications. Classically, in machine learning there are three different forms of performing machine learning: regression, classification and clustering. Regression looks to predict the likelihood of certain outcomes, wherein it may be identifying the prices of homes, or any prediction that is similar in nature. The models require labels and are generally split into training and testing data. Similarly, classification models require labels and are projects wherein the machine learning model looks to classify the difference between different sectors or groups of information. Clustering is similar to classification in that it looks to separate between different groups of information, however, there is a key difference, in that the model does not require labels and is able to classify the difference between data based on factors the model itself produces
+
+	In this project, we use classification to train a model to perform image classification and identify the difference between a phone, a laptop, and a mouse. Overall, the model was rather successful at distinguishing the difference between technology types, however, there were a few cases that the model was not able to be very successful in identifying the difference in between the laptop, mouse and phone. The brightness of the screen, the placement of the device and the angle at which the device was viewed all played a role into the performance of the machine learning model. The training of the algorithm was performed using a neural network which uses various weights or inputs into the model to attempt to gain closer insights into the accuracy of the model.
+
+	Our specific model featured two rounds of training. In the first round of training we focused on a specific angle and brightness of the screen, but found that we needed more inputs in order to get better results, and so we featured a second round of testing that better allowed us to perform our analysis and arrive at even better results. Overall the classification process found that the mouse was the most successful at being identified and was being recognized at 98-99% accuracy several times without being misidentified. Our first round of training found that laptops were the most successful at being trained and were found to be identified at the highest rate. In between our first and second rounds of training, we added more data points that improved the performance of our model. The performance of our algorithms can be attributed to the increase in data points that makes the machine learning model have more reference points to learn from and more data that it can break down and analyze.
+
+	As far as Unmasking AI is concerned, we find that several results from the textbook find their way into our project as well. Unmasking AI features several lessons about the intersection of race, gender, and computing as well as the general principles and ideas behind machine learning, but more specifically image classification as that was indeed the focus of Joy Buolamwini’s grad work. We find that our project follows along her trend of performing image classification and learned about a lot of the machine learning pipeline through our own efforts and the fact that data was indeed king and so crucial to the work that you do in a machine learning setting. Before we had enough data examples we were getting good results, but not accurate enough results, however, with the addition of more data points we were able to substantially improve our model and get more data points. With the white mask issue that Joy Buolamwini was facing she found that there was a bias in data that generally favored white males and as a result,  a lot of black and brown women were left out of the picture and were not able to be identified by machine learning models. 
+
+Joy Buolamwini called this process the Coded Gaze, where there was implicit bias in the way machine learning models were able to identify people of color. These results dramatically shifted Joy Buolamwini’s perspectives and showed that for any machine learning project to be successful there needed to be ample data that was not exclusionary and had different types of people included to demonstrate the possibilities for the future of machine learning where the technology is used to positive ends and made in an effort to help people and be inclusive towards all racial and gender backgrounds. The process of us identifying the data gaps really helped us empathize with Joy Buolamwini’s struggles towards creating a more equitable future by including more substantial data points, and this process is ongoing.
+
+Unmasking AI also discussed the responsibility behind big data and how data could be used to negative ends. Image classification algorithms that are unsuccessful could fail to recognize people or things that are in clear sight and cause accidents in self-driving cars. Joy Buolamwini pointed out, in her book, that the inability to recognize black and brown women could cause major accidents on the road which is very damaging. We recognized in our own experiments that we had difficulties identifying certain objects without ample data points and only through including more data points were we able to successfully identify more data points. We had an extraordinary time building this project and are excited to work more closely with machine learning in the future.
+
+                    </p>
+                </article>
+        </div>
+ 
+        
+ 
+    </div>
+</main>
+ 
+<footer>
+    <p>Shrinath Iyer and Yilin Gao</p>
+</footer>
+ 
+<\
+ 
+</body>
+</html>
+ 
